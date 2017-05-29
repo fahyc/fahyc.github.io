@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Evolution</title>
+    <link rel="stylesheet" href="TemplateData/style.css">
+    <link rel="shortcut icon" href="TemplateData/favicon.ico" />
+    <script src="TemplateData/UnityProgress.js"></script>
+  </head>
+  <body class="template">
+    <p class="header"><span>Unity WebGL Player | </span>Evolution</p>
+    <div class="template-wrap clear">
+      <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" height="600px" width="960px"></canvas>
+      <br>
+      <div class="logo"></div>
+      <div class="fullscreen"><img src="TemplateData/fullscreen.png" width="38" height="38" alt="Fullscreen" title="Fullscreen" onclick="SetFullscreen(1);" /></div>
+      <div class="title">Game4</div>
+	<BR><BR><BR><BR>
+	Instructions: You must grow enough predator red cells to use in a medicine. They only eat the herbivore grey cells. Use the tools at the bottom to maniuplate the simulation and let all the cells thrive - but using them isn't free! Extract larger predators to earn money. 
+	<BR>Tools are as follows from left to right:
+	<BR>Place plant cell
+	<BR>Move cell from one location to another
+	<BR>Instantly split cell
+	<BR>Irradiate cell to make it likely to gain a mutation on the next reproduction
+	<BR>Extract cell for money. 
+    </div>
+    <p class="footer">&laquo; created with <a href="http://unity3d.com/" title="Go to unity3d.com">Unity</a> &raquo;</p>
+
+    <script type='text/javascript'>
+  var Module = {
+    TOTAL_MEMORY: 268435456,
+    errorhandler: null,			// arguments: err, url, line. This function must return 'true' if the error is handled, otherwise 'false'
+    compatibilitycheck: null,
+    dataUrl: "Release/Evolution.data",
+    codeUrl: "Release/Evolution.js",
+    memUrl: "Release/Evolution.mem",
+  };
+</script>
+<script src="Release/UnityLoader.js"></script>
+
+  </body>
+</html>

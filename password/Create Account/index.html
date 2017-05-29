@@ -1,0 +1,47 @@
+<html>
+
+
+
+<script type="text/javascript" src="../jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="../lambdaProcess.js"></script>
+<form id="infoform" action="javascript:send()" method="post">
+Username: <input name="Username" type="text"></input><BR>
+Password: <input name="Password" type="text"></input><BR>
+Email: <input name="Email" type="text"></input>
+<input type="submit" value="Submit">
+
+
+</form>
+
+
+<script type="text/javascript">
+
+var send = function(){
+	//console.log(form2object("infoform"));
+	//console.log("Running");
+	console.log(FormToObj("#infoform"));
+	var payload = FormToObj("#infoform");
+	$.ajax({
+		type:"POST",
+		url:"https://8fkuz2akw0.execute-api.us-west-2.amazonaws.com/Testing/createaccount",
+		dataType:'json',
+		async:false,
+		data:JSON.stringify(payload),
+		success:function(obj){
+			console.log(processRequest(obj));
+		}
+	
+	})
+}
+
+
+function FormToObj(str){
+	var serialized = $(str).serializeArray();
+	var payload = {};
+	for(var i = 0; i < serialized.length; i++){
+		payload[serialized[i].name] = serialized[i].value;
+	}
+	return payload;
+}
+</script>
+</html>

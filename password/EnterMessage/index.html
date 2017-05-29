@@ -1,0 +1,74 @@
+<html>
+
+
+
+<script type="text/javascript" src="../jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="../lambdaProcess.js"></script>
+<form id="infoform" action="javascript:send()" method="post">
+
+
+<textarea rows="4" cols="50" id="textbox">Enter a super secret message here.</textarea>
+<BR>
+<input type="button" value="Send Message" onclick=sendMessage();>
+<input type="button" value="Get Message" onclick=recieveMessage();>
+
+
+
+</form>
+
+
+<script type="text/javascript">
+
+var sendMessage = function(){
+	//console.log(form2object("infoform"));
+	//console.log("Running");
+	//console.log(FormToObj("#infoform"));
+	var payload = $("#textbox").val();
+	$.ajax({
+		type:"POST",
+		url:"https://8fkuz2akw0.execute-api.us-west-2.amazonaws.com/Testing/verifypassword",
+		dataType:'json',
+		async:false,
+		data:createRequest({message:payload,Function:"setSecret"}),
+		success:function(obj){
+			var out = processRequest(obj);
+			//$("#textbox").text(out.);
+			//alert(processRequest(obj));
+			//console.log("success" + obj);
+		}
+	
+	})
+}
+
+var recieveMessage = function(){
+	//console.log(form2object("infoform"));
+	//console.log("Running");
+	//console.log(FormToObj("#infoform"));
+	$.ajax({
+		type:"POST",
+		url:"https://8fkuz2akw0.execute-api.us-west-2.amazonaws.com/Testing/verifypassword",
+		dataType:'json',
+		async:false,
+		data:createRequest({Function:"getSecret"}),
+		success:function(obj){
+			var out = processRequest(obj);
+			$("#textbox").val(out.Message);
+			//$("#textbox").text(out.);
+			//alert(processRequest(obj));
+			//console.log("success" + obj);
+		}
+	
+	})
+}
+
+
+function FormToObj(str){
+	var serialized = $(str).serializeArray();
+	var payload = {};
+	for(var i = 0; i < serialized.length; i++){
+		payload[serialized[i].name] = serialized[i].value;
+	}
+	return payload;
+}
+</script>
+</html>

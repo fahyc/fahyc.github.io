@@ -1,0 +1,136 @@
+<html>
+<head>
+<script type="text/javascript">
+
+Math.randomRange = function(min,max){
+return Math.floor(Math.random() * max-min +min)
+}
+Math.d2r = Math.PI/180;
+Math.r2d = 180/Math.PI;
+
+var fun = function(input){
+	return input;
+}
+
+var calculate = function(){
+	var input = document.getElementById("in").value;
+	var out = fun(input);
+	document.getElementById("out").innerHTML = out;
+}
+
+
+var s = function(input){
+	var text = input.split('"')[1];
+	var num = input.split('"')[0];
+	var out = "";
+	num = parseInt(num,10);
+	for(var i =0; i < num; i++){
+		out += text[Math.randomRange(0,text.length)];
+	}
+	//text = text.replaceall("\n","1");
+	return out;
+}
+
+
+
+
+var makeQuat = function(x,y,z,r,type){
+
+	obj = {
+		i:0,j:0,k:0,w:0
+	}
+	
+	obj.i = x;
+	obj.j = y;
+	obj.k = z;
+	if(type!="middle"){
+		obj.w = Math.cos((r/2) * Math.d2r);
+		var sin = Math.sin((r/2) * Math.d2r);
+		if(type=="con"){
+			sin *=-1;
+		}
+		obj.i *= sin;
+		obj.j *= sin;
+		obj.k *= sin;
+	}
+	return obj;
+}
+var qMult = function(q1,q2){
+	var out = {};
+	out.i = q1.i * q2.w + q1.w * q2.i + q1.j * q2.k - q1.k * q2.j;
+	out.j = q1.j * q2.w + q1.w * q2.j + q1.k * q2.i - q1.i * q2.k;
+	out.k = q1.k * q2.w + q1.w * q2.k + q1.i * q2.j - q1.j * q2.i;
+	out.w = q1.w * q2.w - q1.i * q2.i - q1.j * q2.j - q1.k * q2.k;
+	return out;
+}
+
+var qNorm = function(q){
+	var d= Math.sqrt(q.i*q.i+q.j*q.j+q.k*q.k+q.w*q.w);
+	out = {};
+	out.i=q.i/d;
+	out.j = q.j/d;
+	out.k = q.k/d;
+	out.w = q.w/d;
+	return out; 
+}
+
+//var qnormalise = function()
+
+var qPrint = function(q){
+	return q.w + " + " + q.i + "i + " + q.j + "j + " + q.k + "k";
+}
+
+var qtovec = function(input){
+	var nums = input.split(",");
+	for(var i = 0; i < nums.length; i++){
+		nums[i] = parseFloat(nums[i],10);
+	}
+	
+	var theta = Math.acos(nums[3])*2;
+	var sin = Math.sin(theta/2);
+	
+	var x = nums[0]/sin;
+	var y = nums[1]/sin;
+	var z = nums[2]/sin;
+	return "(" + x + "," + y + "," + z + ")" + theta * Math.r2d;
+	
+}
+var q = function(input){
+	var nums = input.split(",");
+	for(var i = 0; i < nums.length; i++){
+		nums[i] = parseFloat(nums[i],10);
+	}
+	
+	/*var i = nums[0];
+	var j = nums[1];
+	var k = nums[2];
+	var w = Math.cos((nums[3]/2) * Math.d2r);
+	var sin = -Math.sin((nums[3]/2) * Math.d2r);
+	i=sin*i;
+	j=sin*j;
+	k=sin*k;*/
+	q1 = makeQuat(nums[0],nums[1],nums[2],nums[3],"normal");
+	q2 = makeQuat(nums[4],nums[5],nums[6],0,"middle");
+	q3 = makeQuat(nums[0],nums[1],nums[2],nums[3],"con");
+	
+	var out = qMult(q1,q2);
+	out = qMult(out,q3);
+	var print = qPrint(q1) + "<BR>" + qPrint(q2) + "<BR>" + qPrint(q3) + "<BR>" + qPrint(out);
+	return print;
+}
+
+</script>
+
+</head>
+
+<body>
+<textarea id="in"> </textarea>
+<button OnClick=calculate()>calculate</button>
+<BR>
+
+
+<div id="out">
+
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<script id="vertex-shader" type="x-shader/x-vertex">
+attribute vec4 vPosition;
+uniform mat4 ShipPosition;
+
+void
+main()
+{
+    gl_Position = vPosition * ShipPosition;
+	
+}
+</script>
+
+<script id="fragment-shader" type="x-shader/x-fragment">
+precision mediump float;
+void
+main()
+{
+    gl_FragColor = vec4( gl_FragCoord.z, 1.0, 1.0, 1.0 );
+}
+</script>
+
+<script type="text/javascript" src="../Common/webgl-utils.js"></script>
+<script type="text/javascript" src="../Common/initShaders.js"></script>
+<script type="text/javascript" src="../Common/MV.js"></script>
+<script type="text/javascript" src="Matrix.js"></script>
+<script type="text/javascript" src="square.js"></script>
+</head>
+
+Values are in radians.<BR>
+
+<body>
+X<input type="range" id="xSlider" min="0" max="6.28318" step=".1" onchange = "changeSlider()"> <input type="text" id="xtext">
+<BR>
+Y<input type="range" id="ySlider" min="0" max="6.28318" step=".1" onchange = "changeSlider()"><input type="text" id="ytext">
+<BR>
+Z<input type="range" id="zSlider" min="0" max="6.28318" step=".1" onchange = "changeSlider()"><input type="text" id="ztext">
+<BR>
+<canvas id="gl-canvas" width="512" height="512">
+Oops ... your browser doesn't support the HTML5 canvas element
+</canvas>
+</body>
+</html>

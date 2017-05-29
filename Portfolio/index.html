@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Connor Fahy</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+  </head>
+  <body>
+
+    <div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<nav class="navbar navbar-default navbar-inverse navbar-static-top" role="navigation">
+				<div class="navbar-header">
+					 
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+						 <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+					
+				</div>
+				
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li class="active">
+							<a href="#">Portfolio</a>
+						</li>
+						<li>
+							<a href="http://homepages.rpi.edu/~fahyc/Portfolio/Contact.html">Contact</a>
+						</li>
+					</ul>
+				</div>
+				
+			</nav>
+			
+			<div>
+			<BR>
+			<center><B>Portfolio</B><BR>Connor Fahy</center><BR>
+			<p>I am a CS/GSAS major graduating this spring from RPI. My resume is <u><a href="http://homepages.rpi.edu/~fahyc/Resume.pdf">here</a></u>. This is my portfolio of the games and other projects that I’ve worked on while here at RPI. My personal favorite is Xenonet.<BR> Note that I will only be able to start in June 2017.</p>
+
+			</div>
+			<div class="panel panel-default">
+				<p class="font_8">
+					<b>These are major projects I've worked on in the past 4 years with the most recent at the top</b>
+				</p>
+			</div>
+			<div class="panel-group" id="panel-25692">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						 <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-25692" href="#panel-element-581370">The Aquatic Messenger</a>
+					</div>
+					<div id="panel-element-581370" class="panel-collapse collapse">
+						<div class="panel-body">
+							This is an in progress project for the HTC Vive. In the vein of World of Plankton (see below), this game allows the player shrink down and explore the microscopic life of the lake as if they were part of it in Virtual Reality, catching and examining plankton such as the Daphnia Pulicaria. There are several technical achievements in this piece such as complete freedom of movement and continuous scale changing down to tenths of a millimeter, good interface design, and convincing behavior by our virtual organisms. I was lead programmer on this project.
+							<BR>TAM is not released yet - this will be updated with links when it is. Its planned to be put on Steam with a condensed version as a museum exhibit.
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						 <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-25892" href="#panel-element-581370">Xenonet</a>
+					</div>
+					<div id="panel-element-581370" class="panel-collapse collapse">
+						<div class="panel-body">
+							This is a strategy game based on the idea of the internet being a way to control the populations of the world. Players are shadowy organizations that use subtle censorship and plants in the network to fight for control of a simple simulation of the internet. It is a multiplayer RTS with connection over the internet if you do port forwarding, or LAN play otherwise. It has a multiplayer lobby powered by AWS Lambda so the players don't have to enter IP addresses every time they want to play.
+							<div>
+								Major contributions include:<br>
+								<div>
+									<ul class="font_8">
+										<li>
+											<p class="font_8">
+												Much of the design and balance work
+											</p>
+										</li>
+										<li>
+											<p class="font_8">
+												The underlying simulation of idea movement
+											</p>
+										</li>
+										<li>
+											<p class="font_8">
+												Movement of player controlled units and ideas over the network
+											</p>
+										</li>
+										<li>
+											<p class="font_8">
+												The server-side code for matchmaking
+											</p>
+										</li>
+										<li>
+											<p class="font_8">
+												The office system (Spawn buildings with a limited area) and networked node cluster ownership logic
+											</p>
+										</li>
+										<li>
+											<p class="font_8">
+												Plus many small changes and bugfixes
+											</p>
+										</li>
+									</ul>
+								</div>
+							</div>
+							<p class="font_8">
+								Click <u><a href = http://homepages.rpi.edu/~fahyc/Xenonet/Xenonet.zip>here</a></u> to download. (Size: 18 MB)
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						 <a class="panel-title" data-toggle="collapse" data-parent="#panel-25892" href="#panel-element-319827">Relapse</a>
+					</div>
+					<div id="panel-element-319827" class="panel-collapse collapse">
+						<div class="panel-body">
+						<iframe width="560" height="315" src="https://www.youtube.com/embed/kJhGqLb78HI" frameborder="0" allowfullscreen></iframe>
+							<p class="font_8">
+								This is a semester long project done by me, Ian Chamberlain, Alex Gerlich, Giselle Francis, Nicholas Schaffer, and Kaitlin Dell for Game Development 2 and to be showcased at the RPI gamefest.
+							</p>
+							<p class="font_8">
+							</p>
+							<p class="font_8">
+								It's a horror game where you play as a high school student who previously had hallucinations, but wakes up in the school with his friend who is also seeing the hallucinations.
+							</p>
+							<p class="font_8">
+							</p>
+							<p class="font_8">
+								I split the scripting for this game with Ian Chamberlain. Largest contributions:
+							</p>
+							<ul class="font_8">
+								<li>
+									<p class="font_8">
+										Monster AI, spawning, and despawning (though it is hard to get a good look at them because they avoid light)
+									</p>
+								</li>
+								<li>
+									<p class="font_8">
+										Made and used a general tool for conversations and triggers to make the story progress and interact with the level.
+									</p>
+								</li>
+								<li>
+									<p class="font_8">
+										Eyes
+									</p>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						 <a class="panel-title" data-toggle="collapse" data-parent="#panel-25892" href="#panel-element-319828">World of Plankton</a>
+					</div>
+					<div id="panel-element-319828" class="panel-collapse collapse">
+						<div class="panel-body">
+						<iframe width="560" height="315" src="https://www.youtube.com/embed/ZKyTRFUWGaE" frameborder="0" allowfullscreen></iframe>
+							<p class="font_8">
+								WoP is a museum exhibit showcasing the aquatic life of Lake George. The player can change scales to swim with plankton of different sizes. This game is only a part of the larger project which includes sculptures and displays, which is itself a part of the Jefferson project which is a predominantly research project focused on Lake George. A lot of people worked on this, and the credits, as well as a download, can be found <a href="http://www.arts.rpi.edu/~ruiz/WorldOfPlankton/WOP.htm">here</a>.
+							</p>
+							<p class="font_8">
+								<u><a href ="http://www.arts.rpi.edu/~ruiz/WorldOfPlankton/WOP.htm">http://www.arts.rpi.edu/~ruiz/WorldOfPlankton/WOP.htm</a></u>
+							</p>
+							<p class="font_8">
+							</p>
+							<p class="font_8">
+								What I worked on:
+							</p>
+							<ul class="font_8">
+								<li>
+									<p class="font_8">
+										The UI:
+									</p>
+									<ul class="font_8">
+										<li>
+											<p class="font_8">
+												Built the radial menus
+											</p>
+										</li>
+										<li>
+											<p class="font_8">
+												Built the effects screen
+											</p>
+										</li>
+										<li>
+											<p class="font_8">
+												Built the mission bar at the bottom
+											</p>
+										</li>
+										<li>
+											<p class="font_8">
+												Made control cues to teach players the game
+											</p>
+										</li>
+										<li>
+											<p class="font_8">
+												Rebuilt graphs to work with multiple species using different colors, and run based on percentages instead of flat values
+											</p>
+										</li>
+									</ul>
+								</li>
+								<li>
+									<p class="font_8">
+										Changed the simulation of population behind the scenes to be easier/possible to balance in the future and balanced it
+									</p>
+								</li>
+								<li>
+									<p class="font_8">
+										Added chemicals causing changes to the simulation
+									</p>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<p class="font_8">
+					<b>Here are some minor projects, with the ones I'm most proud of at the top</b>
+				</p>
+			</div>
+			<div class="panel-group" id="panel-25893">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						 <a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-25893" href="#panel-element-58370">Game: Evolution</a>
+					</div>
+					<div id="panel-element-58370" class="panel-collapse collapse">
+						<div class="panel-body">
+							This is a game with cells that actually evolve traits. It was made in three weeks and is a little rough around the edges but if you can figure out the interface it's an interesting play.
+							<p class="font_8">
+							<u><a href = http://homepages.rpi.edu/~fahyc/Evolution>Here</a></u> is the link to the webGL version.
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						 <a class="panel-title" data-toggle="collapse" data-parent="#panel-25893" href="#panel-element-31827">WebGL Framework</a>
+					</div>
+					<div id="panel-element-31827" class="panel-collapse collapse">
+						<div class="panel-body">
+							This is a demonstration of a very barebones webGL framework I made in around a month for Computer Graphics. It has a component based system, raycasting and custom meshes and shaders - though I obviously didn't go through too much effort to make those custom shaders or shapes. I worked with Will Pheloung and he did most of the game while I did most of the engine. <BR><u><a href = http://homepages.rpi.edu/~fahyc/Graphics/Final/>Click here to play.</a></u> 
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						 <a class="panel-title" data-toggle="collapse" data-parent="#panel-28893" href="#panel-element-31828">Password Database</a>
+					</div>
+					<div id="panel-element-31828" class="panel-collapse collapse">
+						<div class="panel-body"> 
+							This is a demonstration of a secure authentication system. When the account is created, it stores the password in hashed and salted format in an AWS Dynamodb database. When logging in, it compares the password, then sends back a token. This token can be used in place of a password for one operation, and at the end of the operation a new one is sent. The backend could work with other things such as mobile apps and is designed so it is easy to add new password protected functions. 
+							<BR> <u><a href = http://homepages.rpi.edu/~fahyc/password/>Click here to try it out.</a></u> 
+							<BR> The Amazon SES account I own is in sandbox mode so it will not send emails to anyone not confirmed with me. I allow unconfirmed accounts to function as full accounts however so everything should work fine. 
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						 <a class="panel-title" data-toggle="collapse" data-parent="#panel-25895" href="#panel-element-31830">Game: Personal Space Invaders</a>
+					</div>
+					<div id="panel-element-31830" class="panel-collapse collapse">
+						<div class="panel-body">
+							This was a week long project to make a game about touch. Made by Will Brennan, Nanyou Guan, Alex Le, Paul Steiner and I. I did programming and design work.
+							<BR><u><a href = http://homepages.rpi.edu/~fahyc/games/PersonalSpaceInvaders/>Click here to play</a> </u>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						 <a class="panel-title" data-toggle="collapse" data-parent="#panel-25894" href="#panel-element-31829">Level design: Transfer</a>
+					</div>
+					<div id="panel-element-31829" class="panel-collapse collapse">
+						<div class="panel-body">
+							This is the sequel to a successful game jam game. It's a fun puzzle game about transferring properties between different objects. I designed all but the first level in this game. They get pretty hard - see if you can beat it! 
+							<BR><u><a href = http://homepages.rpi.edu/~fahyc/Transfer>Click here to play</a><u> 
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/scripts.js"></script>
+  </body>
+</html>

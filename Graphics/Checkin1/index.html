@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<!-- saved from url=(0064)http://webglfundamentals.org/webgl/webgl-text-html-canvas2d.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<link type="text/css" href="./resources/webgl-tutorials.css" rel="stylesheet">
+<style>
+* {
+  box-sizing: border-box;
+}
+#ui {
+    width: 200px;
+}
+
+.container {
+    position: relative;
+}
+
+#text {
+    background-color: transparent;  /* needed because webgl-tutoraisl.css sets canvas bg color to white */
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: 10;
+}
+
+</style>
+
+<script type="text/javascript" src="./resources/webgl-utils.js"></script>
+<script type="text/javascript" src="./resources/initShaders.js"></script>
+<script type="text/javascript" src="./resources/MV.js"></script>
+
+<script src="./resources/webgl-lessons-helper.js"></script>
+<script src="./resources/3d-math.js"></script>
+
+<script type="text/javascript" src="./resources/Primitive.js"></script>
+<script type="text/javascript" src="./resources/Rigidbody.js"></script>
+<script type="text/javascript" src="./resources/Object.js"></script>
+</head>
+<body>
+<div class="container">
+  <canvas id="canvas" width="800" height="480"></canvas>
+  <canvas id="text" width="800" height="480"></canvas>
+</div>
+
+<!-- vertex shader -->
+<script id="3d-vertex-shader" type="x-shader/x-vertex">
+attribute vec4 a_position;
+attribute vec4 a_color;
+uniform mat4 u_matrix;
+varying vec4 v_color;
+
+void main() {
+  // Multiply the position by the matrix.
+  gl_Position = u_matrix * a_position;
+
+  // Pass the color to the fragment shader.
+  v_color = a_color;
+}
+</script>
+<!-- fragment shader -->
+<script id="3d-fragment-shader-resource-generators" type="x-shader/x-fragment">
+precision mediump float;
+
+// Passed in from the vertex shader.
+varying vec4 v_color;
+
+void main() {
+   gl_FragColor = v_color;
+}
+</script>
+
+
+<script id="vertex-shader-resource-generators" type="x-shader/x-vertex">
+attribute vec4 vPosition;
+attribute  vec4 vNormal;
+
+uniform mat4 rotationMatrix;
+uniform mat3 normalMatrix;
+
+varying lowp vec4 vColor;
+
+void
+main()
+{
+    gl_Position = vPosition * rotationMatrix;
+    vColor = vec4 ( vNormal.z, vNormal.x, vNormal.y,.5);
+}
+</script>
+<!-- fragment shader -->
+<script id="3d-fragment-shader" type="x-shader/x-fragment">
+precision mediump float;
+
+// Passed in from the vertex shader.
+varying vec4 v_color;
+
+void main() {
+   gl_FragColor = v_color;
+}
+</script>
+
+
+<script id="vertex-shader" type="x-shader/x-vertex">
+attribute vec4 vPosition;
+attribute  vec4 vNormal;
+
+uniform mat4 rotationMatrix;
+uniform mat3 normalMatrix;
+
+varying lowp vec4 vColor;
+
+void
+main()
+{
+    gl_Position = vPosition * rotationMatrix;
+    vColor = vec4 (vNormal.x, vNormal.y, vNormal.z,1.0);
+}
+</script>
+
+<script id="fragment-shader" type="x-shader/x-fragment">
+varying lowp vec4 vColor;
+precision mediump float;
+
+
+void
+main()
+{
+    gl_FragColor = vColor;
+}
+</script>
+<script type="text/javascript" src="./resources/main.js"></script>
+
+
+
+</body></html>
