@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Stopwatch</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.png">
   <style>
     :root {
       --bg: #f5f5f5;
@@ -35,31 +36,22 @@
       border: none;
       border-radius: 6px;
       cursor: pointer;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 6px rgba(0,0,0,.1);
       background: var(--primary);
       color: #fff;
     }
-    button.secondary { background: #555; }
-    button:hover { box-shadow: 0 4px 12px rgba(0,0,0,.15); }
+    button.secondary { background:#555; }
+    button:hover { box-shadow:0 4px 12px rgba(0,0,0,.15); }
 
-    /* Overlays */
     .overlay {
-      position: fixed;
-      inset: 0;
-      display: none;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 1rem;
-      padding: 2rem 1.5rem;
-      background: rgba(0,0,0,.85);
-      color: #fff;
-      text-align: center;
-      z-index: 1000;
+      position:fixed; inset:0; display:none;
+      flex-direction:column; justify-content:center; align-items:center;
+      gap:1rem; padding:2rem 1.5rem;
+      background:rgba(0,0,0,.85); color:#fff; text-align:center; z-index:1000;
     }
-    .overlay h2 { margin: 0; }
-    .overlay button { background: var(--accent); box-shadow: none; }
-    #aboutOverlay ul { text-align: left; max-width: 26rem; margin: 0 auto; padding-left: 1.2rem; }
+    .overlay h2{margin:0;}
+    .overlay button{background:var(--accent);box-shadow:none;}
+    #aboutOverlay ul{ text-align:left; max-width:26rem; margin:0 auto; padding-left:1.2rem; }
   </style>
 </head>
 <body>
@@ -71,104 +63,53 @@
     <button id="about" class="secondary">About</button>
   </div>
 
-  <!-- Idle overlay -->
   <div id="idleOverlay" class="overlay">
     <h2>You've been inactive for 2&nbsp;minutes.</h2>
     <p>The timer is paused.</p>
     <button id="resumeBtn">I'm back</button>
   </div>
 
-  <!-- About overlay -->
   <div id="aboutOverlay" class="overlay">
     <h2>Focus Stopwatch</h2>
     <p>A tiny, privacy‑friendly stopwatch for tracking focused work sessions.</p>
     <ul>
       <li>Counts accurately even when the tab is hidden.</li>
       <li>Ignores time while the computer sleeps.</li>
-      <li>Auto‑pauses after 2&nbsp;minutes of inactivity using the Idle Detection API.</li>
+      <li>Auto‑pauses after 2&nbsp;minutes of inactivity (Idle Detection API).</li>
       <li>Sends a notification / beep / blinking‑tab alert when it pauses.</li>
       <li>Shows the current runtime in the tab title for quick glances.</li>
-      <li>Runs 100 % client‑side — no network, no data leaves your device.</li>
+      <li>Runs 100 % client‑side — no data leaves your device.</li>
     </ul>
     <button id="aboutClose">Close</button>
   </div>
 
   <script>
-    (() => {
-      const TICK = 100;
-      const SLEEP_THRESHOLD = 60_000;
-      const IDLE_THRESHOLD = 120_000;
+    (()=>{
+      const TICK=100, SLEEP_THRESHOLD=60_000, IDLE_THRESHOLD=120_000;
+      const elTime=document.getElementById('time');
+      const idleOverlay=document.getElementById('idleOverlay');
+      const resumeBtn=document.getElementById('resumeBtn');
+      const aboutBtn=document.getElementById('about');
+      const aboutOverlay=document.getElementById('aboutOverlay');
+      const aboutClose=document.getElementById('aboutClose');
 
-      const elTime = document.getElementById('time');
-      const idleOverlay = document.getElementById('idleOverlay');
-      const resumeBtn = document.getElementById('resumeBtn');
-      const aboutBtn = document.getElementById('about');
-      const aboutOverlay = document.getElementById('aboutOverlay');
-      const aboutClose = document.getElementById('aboutClose');
+      let startTime=null, elapsedBefore=0, timerId=null, lastNow=0;
+      let idleDetectorInit=false, idleDetector;
+      let blinkInt=null, baseTitle=document.title;
 
-      let startTime = null;
-      let elapsedBefore = 0;
-      let timerId = null;
-      let lastNow = 0;
+      const fmt=ms=>{const s=Math.floor(ms/1000);const hh=Math.floor(s/3600);const mm=Math.floor(s/60)%60;const ss=s%60;const cs=Math.floor((ms%1000)/10);return(hh?String(hh).padStart(2,'0')+':':'')+String(mm).padStart(2,'0')+':'+String(ss).padStart(2,'0')+'.'+String(cs).padStart(2,'0');};
 
-      // Idle Detection
-      let idleDetectorInit = false;
-      let idleDetector;
-
-      // Attention helpers
-      let blinkInt = null;
-      let baseTitle = document.title;
-
-      const fmt = ms => {
-        const s = Math.floor(ms/1000);
-        const hh = Math.floor(s/3600);
-        const mm = Math.floor(s/60)%60;
-        const ss = s%60;
-        const cs = Math.floor((ms%1000)/10);
-        return (hh?String(hh).padStart(2,'0')+':':'')+String(mm).padStart(2,'0')+':' + String(ss).padStart(2,'0')+'.'+String(cs).padStart(2,'0');
-      };
-
-      function render(ms){
-        const txt = fmt(ms);
-        elTime.textContent = txt;
-        document.title = txt;
-        if(!blinkInt) baseTitle = txt;
-      }
-
-      function clearAttention(){
-        if(blinkInt){ clearInterval(blinkInt); blinkInt=null; document.title=baseTitle; }
-        if('clearAppBadge'in navigator) navigator.clearAppBadge();
-      }
-
+      function render(ms){const t=fmt(ms);elTime.textContent=t;document.title=t;if(!blinkInt) baseTitle=t;}
+      function clearAttention(){if(blinkInt){clearInterval(blinkInt);blinkInt=null;document.title=baseTitle;} if('clearAppBadge'in navigator) navigator.clearAppBadge();}
+      function beep(){try{const ctx=new(window.AudioContext||window.webkitAudioContext)();const o=ctx.createOscillator();o.frequency.value=440;o.connect(ctx.destination);o.start();o.stop(ctx.currentTime+0.15);}catch{}}
       function attentionPunch(){
-        if('Notification'in window && Notification.permission==='granted'){
-          const n = new Notification('Timer paused (inactive 2 min)',{body:'Click to resume',requireInteraction:true});
-          n.onclick=()=>{window.focus(); resumeBtn.click();};
-          if('setAppBadge'in navigator) navigator.setAppBadge(1);
-          return;
-        }
-        try{const ctx=new(window.AudioContext||window.webkitAudioContext)();const osc=ctx.createOscillator();osc.frequency.value=440;osc.connect(ctx.destination);osc.start();osc.stop(ctx.currentTime+0.15);}catch{}
-        if(!blinkInt){blinkInt=setInterval(()=>{document.title=document.title.startsWith('⚠️ ')?baseTitle:'⚠️ '+baseTitle;},800);window.addEventListener('focus',clearAttention,{once:true});}
-      }
+        if('Notification'in window && Notification.permission==='granted'){const n=new Notification('Timer paused (inactive 2 min)',{body:'Click to resume',requireInteraction:true});n.onclick=()=>{window.focus();resumeBtn.click();}; if('setAppBadge'in navigator) navigator.setAppBadge(1);return;} beep(); if(!blinkInt){blinkInt=setInterval(()=>{document.title=document.title.startsWith('⚠️ ')?baseTitle:'⚠️ '+baseTitle;},800);window.addEventListener('focus',clearAttention,{once:true});}}
 
-      function tick(){
-        const now=Date.now();
-        const d=now-lastNow; lastNow=now;
-        if(d>SLEEP_THRESHOLD) startTime+=d; // skip sleep
-        render(now-startTime+elapsedBefore);
-      }
+      function tick(){const now=Date.now();const d=now-lastNow;lastNow=now;if(d>SLEEP_THRESHOLD) startTime+=d;render(now-startTime+elapsedBefore);}      
+      function start(){clearAttention(); if(timerId) return; startTime=Date.now(); lastNow=startTime; timerId=setInterval(tick,TICK); initIdleDetector();}
+      function stop(){if(!timerId) return; clearInterval(timerId); timerId=null; elapsedBefore+=Date.now()-startTime; render(elapsedBefore);}      
+      function reset(){stop(); elapsedBefore=0; render(0);}      
 
-      function start(){
-        clearAttention();
-        if(timerId) return;
-        startTime=Date.now(); lastNow=startTime;
-        timerId=setInterval(tick,TICK);
-        initIdleDetector();
-      }
-      function stop(){ if(!timerId) return; clearInterval(timerId); timerId=null; elapsedBefore+=Date.now()-startTime; render(elapsedBefore);}      
-      function reset(){ stop(); elapsedBefore=0; render(0); }
-
-      // UI
       document.getElementById('start').addEventListener('click',start);
       document.getElementById('stop').addEventListener('click',stop);
       document.getElementById('reset').addEventListener('click',reset);
@@ -178,22 +119,17 @@
       window.addEventListener('keydown',e=>{if(e.key==='Escape'){idleOverlay.style.display='none';aboutOverlay.style.display='none';}});
 
       async function initIdleDetector(){
-        if(idleDetectorInit||!("IdleDetector"in window)||!window.isSecureContext) return; idleDetectorInit=true;
-        if('Notification'in window && Notification.permission==='default') await Notification.requestPermission();
-        let perm; try{perm=await IdleDetector.requestPermission();}catch(e){console.warn('Idle permission fail',e); return;}
+        if(idleDetectorInit || !('IdleDetector'in window) || !window.isSecureContext) return; idleDetectorInit=true;
+        if('Notification'in window && Notification.permission==='default'){try{await Notification.requestPermission();}catch{}}
+        let perm; try{perm=await IdleDetector.requestPermission();}catch(e){console.warn('Idle permission fail',e);return;}
         if(perm!=='granted') return;
         idleDetector=new IdleDetector();
-        idleDetector.addEventListener('change', () => {
-          const { userState, screenState } = idleDetector;
-          const idle = userState === 'idle' || screenState === 'locked';
-          // Trigger pause/notification only if the stopwatch is actually running
-          if (idle && timerId) {
-            stop();
-            idleOverlay.style.display = 'flex';
-            attentionPunch();
-          }
-        }); idleOverlay.style.display='flex'; attentionPunch();}});
-        await idleDetector.start({threshold:IDLE_THRESHOLD});
+        idleDetector.addEventListener('change',()=>{
+          const {userState,screenState}=idleDetector;
+          const idle=userState==='idle'||screenState==='locked';
+          if(idle && timerId){stop(); idleOverlay.style.display='flex'; attentionPunch();}
+        });
+        try{await idleDetector.start({threshold:IDLE_THRESHOLD});}catch(e){console.warn('IdleDetector start error',e);}
       }
 
       render(0);
