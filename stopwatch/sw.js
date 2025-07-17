@@ -2,9 +2,9 @@
    Caches the app shell so it works offline and updates
    itself quietly when you publish a new version.         */
 
-const CACHE_NAME = 'focus-stopwatch-2025-07-18';          // bump on each release
+const CACHE_NAME = 'focus-stopwatch-2025-07-19';          // bump on each release
 const ASSETS = [
-  '/',                       // root → stopwatch.html
+  '/stopwatch',                       // root → stopwatch.html
   '/stopwatch/index.html',
   '/stopwatch/manifest.json',
   '/stopwatch/favicon.png',
