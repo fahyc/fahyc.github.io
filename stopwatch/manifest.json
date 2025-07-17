@@ -8,5 +8,18 @@
   "icons": [
     { "src": "icon.png", "sizes": "512x512", "type": "image/png" },
     { "src": "favicon.png",  "sizes": "32x32", "type": "image/png" }
+  ],
+  "screenshots": [
+    {
+      "src": "screenshot.png",
+      "sizes": "972x1240",
+      "type": "image/png"
+    },
+    {
+      "src": "screenshot_wide.png",
+      "sizes": "2498x1376",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
   ]
 }
